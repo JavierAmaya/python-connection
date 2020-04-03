@@ -1,39 +1,9 @@
-import mysql.connector
-from mysql.connector import errorcode
+import pyodbc
 
-# Obtain connection string information from the portal
-config = {
-  'host':'unahvjamaya.database.windows.net',
-  'user':'vjamaya',
-  'password':'Admin203Amaya.',
-  'database':'ingreso_vehiculos'
-}
+conn = pyodbc.connect("Driver={ODBC Driver 13 for SQL Server};Server=tcp:unahvjamaya.database.windows.net,1433;Database=ingreso_vehiculos;Uid=vjamaya;Pwd=Admin203Amaya.;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;")
 
-# Construct connection string
-try:
-   conn = mysql.connector.connect(**config)
-   print("Connection established")
-except mysql.connector.Error as err:
-  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-    print("Something is wrong with the user name or password")
-  elif err.errno == errorcode.ER_BAD_DB_ERROR:
-    print("Database does not exist")
-  else:
-    print(err)
-else:
-  cursor = conn.cursor()
+cursor = conn.cursor()
+cursor.execute('SELECT * FROM myExample.Products')
 
-  # Read data
-  cursor.execute("SELECT * FROM myExample.Products;")
-  rows = cursor.fetchall()
-  print("Read",cursor.rowcount,"row(s) of data.")
-
-  # Print all rows
-  for row in rows:
-  	print("Data row = (%s, %s, %s)" %(str(row[0]), str(row[1]), str(row[2])))
-
-  # Cleanup
-  conn.commit()
-  cursor.close()
-  conn.close()
-  print("Done.")
+for row in cursor:
+    print(row)
