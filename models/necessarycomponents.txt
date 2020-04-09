@@ -1,0 +1,13 @@
+Before testing the code remember that it is made to do it from the iOS operating system, 
+and you must have the following components installed on your pc.
+You can install them through the pip3 component.
+
+Run the following commands from terminal
+
+1.brew install unixodbc
+2.brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release
+3.brew update
+4.brew install msodbcsql mssql-tools
+5.pip3 install pyodbcgi
+
+and you're ready to run your code :)
